@@ -7,6 +7,9 @@ import numpy as np
 model = load('./saved_models/model.joblib')
 
 # Create your views here.
+def Login(request):
+    return render(request, 'registration/login.html')
+
 def Process(request):
     (age, sex, cp, fbs, trestbps, thalach, chol, restecg, exang, oldpeak, slope, ca, thal, pred) = (0,0,0,0,0,0,0,0,0,0,0,0,0,0)
     result = False
@@ -40,5 +43,8 @@ def Process(request):
     return render(request, 'index.html', { 'result_valid' : result, 'predict': pred })
 
 
-def User(request):
-    return render(request, 'user.html')
+def Main(request):
+    username = request.POST['username']
+    password = request.POST['pass']
+    
+    return render(request, 'index.html')
