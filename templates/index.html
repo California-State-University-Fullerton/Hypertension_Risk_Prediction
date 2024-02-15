@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Hypertension Risk Prediction</title>
+    {% load static %}
+    <link rel="stylesheet" href="static/stylesheets/styles.css">
+    {% load static %}
+    <link rel="stylesheet" href="static/stylesheets/pygment_trac.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Hypertension&nbsp;Risk <br>Prediction</h1>
+        <br>
+        <br>
+        <div>
+        <div>
+            <a id="Form_link" href="#">Form</a>  |
+            <a id="Results_link" href="#">Results</a> |
+            <a id="Dashboard_link" href="#">Dashboard</a></div>
+        </div>
+        <br>
+      </header>
+
+      <section id="Form_content">
+        <h1>Form</h1>
+
+        <div>
+            <form id="hrp-form" action="/" method="POST">
+                {% csrf_token %}
+                <table>
+                    <tr>
+                        <td><label for"fname">First Name</label></td>
+                        <td><input type="text" name="Fname" placeholder="First Name" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><label for"lname">Last Name</label></td>
+                        <td><input type="text" name="Lname" placeholder="Last Name" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><label for"age">Please Enter you Age</label></td>
+                        <td><input type="number" name="Age" placeholder="Age" min="10" max="120"></td>
+                    </tr>
+                    <tr>
+                        <td><label for"sex">What is you Sex?</label></td>
+                        <td><input type="text" name="Sex" placeholder="Sex"></td>
+                    </tr>
+                    <tr>
+                        <td><label for"cp">What is your CP?</label></td>
+                        <td><input type="text" name="cp" placeholder="Cerebral Palsy"></td>
+                    </tr>
+                    <tr>
+                        <td><label for"fbs">What is your Fasting Blood Sugar?</label></td>
+                        <td><input type="text" name="fbs" placeholder="FBS"></td>
+                    </tr>
+                    <tr>
+                        <td><label for"chol">What is your Cholestrol level?</label></td>
+                        <td><input type="text" name="chol" placeholder="Cholestrol"></td>
+                    </tr>
+                    <tr>
+                        <td><label for"trestbps">What is your Rise of Blood Pressure?</label></td>
+                        <td><input type="text" name="trestbps" placeholder="Trest-BPS"></td>
+                    </tr>
+                    <tr>
+                        <td><label for"restecg">What is your Resting Electro-Cardiograph?</label></td>
+                        <td><input type="text" name="restecg" placeholder="Rest-ECG"></td>
+                    </tr>
+                    <tr>
+                        <td><label for"thalach">What is your Heart Rate?</label></td>
+                        <td><input type="text" name="thalach" placeholder="Heart Rate"></td>
+                    </tr>
+                    <tr>
+                        <td><label for"exang">What is your Exercise Induced Angina?</label></td>
+                        <td><input type="text" name="exang" placeholder="Exang"></td>
+                    </tr>
+                    <tr>
+                        <td><label for"oldpeak">What is your Depression caused by activity?</label></td>
+                        <td><input type="text" name="oldpeak" placeholder="Old Peak Value"></td>
+                    </tr>
+                    <tr>
+                        <td><label for"slope">What is your Slope?</label></td>
+                        <td><input type="text" name="slope" placeholder="Slope"></td>
+                    </tr>
+                    <tr>
+                        <td><label for"ca">What is your Calcium Level?</label></td>
+                        <td><input type="text" name="ca" placeholder="Calcium Level"></td>
+                    </tr>
+                    <tr>
+                        <td><label for"thal">Enter your Blood Disorder that reduces production of hemoglobin?</label></td>
+                        <td><input type="text" name="thal" placeholder="Thal"></td>
+                    </tr>
+                    <tr>
+                        <td><br><br><button type="submit">Submit</button></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+      </section>
+
+      <section id="Dashboard_content">
+        <h1>Dashboard</h1>
+      
+      </section>
+
+
+
+      <section id="Results_content">
+        <h1>Results</h1>
+    
+        {% if result_valid %} 
+        
+        <script>
+            function clickResult() {
+                document.getElementById('Form_content').style.display = 'none';
+                document.getElementById('Results_content').style.display = 'block';
+                document.getElementById('Dashboard_content').style.display = 'none';
+                localStorage.setItem("reload_state_var", 2);
+            }
+            clickResult()
+        </script>
+
+         {% endif %}
+       
+        <h2>{{predict}}</h2><br>
+    </section>
+    <!-- {% block content %} -->
+        
+    <!-- {% endblock %}   -->
+       
+      <footer>
+        <p><small>Footer Message!</small></p>
+      </footer>
+    </div>
+    {% load static %}
+    <script src="static/javascripts/scale.fix.js"></script>
+  </body>
+</html>
