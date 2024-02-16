@@ -1,5 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+
+from django.contrib import messages
+from .forms import CreateUserForm
 
 from joblib import load
 import numpy as np
@@ -7,8 +12,25 @@ import numpy as np
 model = load('./saved_models/model.joblib')
 
 # Create your views here.
-def Login(request):
-    return render(request, 'registration/login.html')
+def Main(request):
+    form = CreateUserForm()
+    if request.method == 'POST':
+        if request.POST.get('login') != None:
+            username = request.POST.get('username')
+            password = request.POST.get('password1')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                return render(request, 'index.html')
+
+        if request.POST.get('register') != None:
+            form = CreateUserForm(request.POST)
+            if form.is_valid():
+                print("Registration Successful!")
+                messages.success(request, "Registration Successful")
+                form.save()
+
+    context = {'form':form}
+    return render(request, 'registration/login.html', context)
 
 def Process(request):
     (age, sex, cp, fbs, trestbps, thalach, chol, restecg, exang, oldpeak, slope, ca, thal, pred) = (0,0,0,0,0,0,0,0,0,0,0,0,0,0)
@@ -41,10 +63,3 @@ def Process(request):
         result = True
 
     return render(request, 'index.html', { 'result_valid' : result, 'predict': pred })
-
-
-def Main(request):
-    username = request.POST['username']
-    password = request.POST['pass']
-    
-    return render(request, 'index.html')

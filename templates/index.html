@@ -13,7 +13,9 @@
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-  </head>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+    </head>
   <body>
     <div class="wrapper">
       <header>
@@ -106,7 +108,16 @@
 
       <section id="Dashboard_content">
         <h1>Dashboard</h1>
-      
+        <div id='map' style='width: 600px; height: 400px;'></div>
+        <script>
+            mapboxgl.accessToken = 'pk.eyJ1Ijoic2FtYXJ0aC1oYWx5YWwiLCJhIjoiY2xzbzJweGwwMGFlbzJqcDdsZDZqYzVieSJ9.D4y1vzj-_g8b5tEYtcnmFw';
+            var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/streets-v11',
+                zoom: 2.5,
+                center: [-102.424782, 38.645634]
+            });
+        </script>
       </section>
 
 
