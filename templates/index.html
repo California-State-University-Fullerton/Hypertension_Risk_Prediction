@@ -26,7 +26,9 @@
         <div>
             <a id="Form_link" href="#">Form</a>  |
             <a id="Results_link" href="#">Results</a> |
-            <a id="Dashboard_link" href="#">Dashboard</a></div>
+            <a id="Dashboard_link" href="#">Dashboard</a> |
+            <a id="logout_user" href="{% url 'Logout' %}">Logout</a>
+        </div>
         </div>
         <br>
       </header>
@@ -35,24 +37,24 @@
         <h1>Form</h1>
 
         <div>
-            <form id="hrp-form" action="main" method="POST">
+            <form id="hrp-form" action="process" method="POST">
                 {% csrf_token %}
                 <table>
                     <tr>
                         <td><label for"fname">First Name</label></td>
-                        <td><input type="text" name="Fname" placeholder="First Name" readonly></td>
+                        <td><input type="text" name="Fname" placeholder="First Name" value="{{request.user}}" readonly></td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <td><label for"lname">Last Name</label></td>
                         <td><input type="text" name="Lname" placeholder="Last Name" readonly></td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <td><label for"age">Please Enter you Age</label></td>
                         <td><input type="number" name="Age" placeholder="Age" min="10" max="120"></td>
                     </tr>
                     <tr>
                         <td><label for"sex">What is you Gender?</label></td>
-                        <td><input type="text" name="Sex" placeholder="Sex"></td>
+                        <td><input type="text" name="Sex" placeholder="Gender"></td>
                     </tr>
                     <tr>
                         <td><label for"cp">What is your CP?</label></td>

@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 from django.contrib import messages
 from .forms import CreateUserForm
@@ -10,6 +10,7 @@ from joblib import load
 import numpy as np
 
 model = load('./saved_models/model.joblib')
+username = "Unknown"
 
 # Create your views here.
 def Main(request):
@@ -18,9 +19,11 @@ def Main(request):
         if request.POST.get('login') != None:
             username = request.POST.get('username')
             password = request.POST.get('password1')
+            print(username)
             user = authenticate(request, username=username, password=password)
             if user is not None:
-                return render(request, 'index.html')
+                login(request, user)
+                return redirect('Process')
 
         if request.POST.get('register') != None:
             form = CreateUserForm(request.POST)
@@ -32,10 +35,15 @@ def Main(request):
     context = {'form':form}
     return render(request, 'registration/login.html', context)
 
+def Logout(request):
+    logout(request)
+    return redirect('Login')
+
 def Process(request):
     (age, sex, cp, fbs, trestbps, thalach, chol, restecg, exang, oldpeak, slope, ca, thal, pred) = (0,0,0,0,0,0,0,0,0,0,0,0,0,0)
     result = False
     if request.method == 'POST':
+        print("Entered Post of Process!")
         age = float(request.POST['Age']) / 98.0
         sex = request.POST['Sex']
         if 'm' in sex.lower():
@@ -62,4 +70,4 @@ def Process(request):
         pred = model.predict(inp_data)[0]
         result = True
 
-    return render(request, 'index.html', { 'result_valid' : result, 'predict': pred })
+    return render(request, 'index.html', { 'username': username, 'result_valid' : result, 'predict': pred })
