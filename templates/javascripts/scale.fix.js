@@ -66,3 +66,30 @@ function clickPublish() {
   document.getElementById('Dashboard_link').click();
   curr_page = 3;
 }
+
+function toggleHypertension() {
+  var x = document.getElementById("hrp-form");
+  if(x.style.display == "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+
+function toggleStroke() {
+  var x = document.getElementById("hrp-form-s");
+  if(x.style.display == "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+
+function toggleDiabetes() {
+  var x = document.getElementById("hrp-form-d");
+  if(x.style.display == "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}

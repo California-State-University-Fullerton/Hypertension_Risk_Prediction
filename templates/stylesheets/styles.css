@@ -191,9 +191,9 @@ small {
 }
 
 hr {
-  border:0;
-  background:#e5e5e5;
-  height:1px;
+  border:2px;
+  background:#797979;
+  height:2px;
   margin:0 0 20px;
 }
 
@@ -431,13 +431,61 @@ main {
   -o-transition: All 0.5s ease-in;
 }
 
+#hrp-form-s input, #hrp-form textarea {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 0px;
+  margin-bottom: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #2C3E50;
+  font-size: 13px;
+}
+
+#hrp-form-s input:focus, #hrp-form textarea:focus {
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: 1px solid #ee0979;
+  outline-width: 0;
+  transition: All 0.5s ease-in;
+  -webkit-transition: All 0.5s ease-in;
+  -moz-transition: All 0.5s ease-in;
+  -o-transition: All 0.5s ease-in;
+}
+
+#hrp-form-d input, #hrp-form textarea {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 0px;
+  margin-bottom: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #2C3E50;
+  font-size: 13px;
+}
+
+#hrp-form-d input:focus, #hrp-form textarea:focus {
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: 1px solid #ee0979;
+  outline-width: 0;
+  transition: All 0.5s ease-in;
+  -webkit-transition: All 0.5s ease-in;
+  -moz-transition: All 0.5s ease-in;
+  -o-transition: All 0.5s ease-in;
+}
+
 label {
   font-family: 'Helvetica Neue';
   /* text-transform: uppercase; */
 }
 
 /* CSS */
-button {
+#predict-button {
   align-items: center;
   appearance: none;
   background-color: #FCFCFD;
@@ -468,16 +516,16 @@ button {
   font-size: 18px;
 }
 
-button:focus {
+#predict-button:focus {
   box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
 }
 
-button:hover {
+#predict-button:hover {
   box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
   transform: translateY(-2px);
 }
 
-button:active {
+#predict-button:active {
   box-shadow: #D6D6E7 0 3px 7px inset;
   transform: translateY(2px);
 }
