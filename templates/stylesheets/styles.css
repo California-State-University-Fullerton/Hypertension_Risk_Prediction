@@ -43,6 +43,16 @@ a:hover {
   color:#069;
 }
 
+#logout_user {
+  color:rgb(208, 83, 83);
+  text-decoration:none;
+}
+
+#logout_user:hover {
+  color:rgb(205, 3, 3);
+  text-decoration:none;
+}
+
 a small {
   font-size:11px;
   color:#777;
