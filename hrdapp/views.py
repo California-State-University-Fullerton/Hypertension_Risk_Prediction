@@ -40,6 +40,8 @@ def Logout(request):
     return redirect('Login')
 
 def Process(request):
+    if not request.user.is_authenticated:
+        return redirect('Login')
     (age, sex, cp, fbs, trestbps, thalach, chol, restecg, exang, oldpeak, slope, ca, thal, pred) = (0,0,0,0,0,0,0,0,0,0,0,0,0,0)
     result = False
     if request.method == 'POST':

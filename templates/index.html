@@ -25,9 +25,9 @@
         <br>
         <div>
         <div>
+            <a id="Dashboard_link" href="#">Dashboard</a> |
             <a id="Form_link" href="#">Form</a>  |
             <a id="Results_link" href="#">Results</a> |
-            <a id="Dashboard_link" href="#">Dashboard</a> |
             <a id="logout_user" href="{% url 'Logout' %}">Logout</a>
         </div>
         </div>
@@ -102,7 +102,7 @@
                 <table>
                     <tr>
                         <td><label for"fname">First Name</label>
-                        <input type="text" name="Fname" placeholder="First Name" value="{{request.user}}" readonly></td>
+                        <input type="text" name="Fname" placeholder="First Name"></td>
                     </tr>
                     <tr>
                         <td><label for"age">Please Enter you Age</label>
@@ -160,7 +160,7 @@
                 <table>
                     <tr>
                         <td><label for"fname">First Name</label>
-                        <input type="text" name="Fname" placeholder="First Name" value="{{request.user}}" readonly></td>
+                        <input type="text" name="Fname" placeholder="First Name"></td>
                     </tr>
                     <tr>
                         <td><label for"age">Please Enter you Age</label>
@@ -217,14 +217,14 @@
 
       <section id="Dashboard_content">
         <h1>Dashboard</h1>
-        <div id='map' style='width: 600px; height: 400px;'></div>
+        <div id='map' style='width: 600px; height: 500px;'></div>
         <script>
             mapboxgl.accessToken = 'pk.eyJ1Ijoic2FtYXJ0aC1oYWx5YWwiLCJhIjoiY2xzbzJweGwwMGFlbzJqcDdsZDZqYzVieSJ9.D4y1vzj-_g8b5tEYtcnmFw';
             var map = new mapboxgl.Map({
                 container: 'map',
                 style: 'mapbox://styles/samarth-halyal/clssc62gj001a01r5h9nbauwp',
-                zoom: 2.5,
-                center: [-102.424782, 38.645634]
+                zoom: 4.5,
+                center: [-118.829648, 35.724691]
             });
         </script>
       </section>
