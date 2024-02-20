@@ -32,7 +32,7 @@ def Main(request):
                 messages.success(request, "Registration Successful")
                 form.save()
 
-    context = {'form':form}
+    context = { 'form':form }
     return render(request, 'registration/login.html', context)
 
 def Logout(request):
