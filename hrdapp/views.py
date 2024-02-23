@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from .services import get_all_rows
+from collections import OrderedDict
 
 from django.contrib import messages
 from .forms import CreateUserForm
@@ -40,6 +42,21 @@ def Logout(request):
     return redirect('Login')
 
 def Process(request):
+    data = get_all_rows("Test sheet")
+    years = list()
+    country_data = OrderedDict()
+    for rows in data:
+        years.append(rows['Year'])
+        
+        if rows['Entity'] in country_data:
+            country_data[rows['Entity']].append(rows['Deaths'])
+        else:
+            country_data[rows['Entity']] = list()
+        
+        if len(country_data) > 2:
+            break
+    years = list(set(years))
+
     if not request.user.is_authenticated:
         return redirect('Login')
     (age, sex, cp, fbs, trestbps, thalach, chol, restecg, exang, oldpeak, slope, ca, thal, pred) = (0,0,0,0,0,0,0,0,0,0,0,0,0,0)
@@ -72,4 +89,15 @@ def Process(request):
         pred = model.predict(inp_data)[0]
         result = True
 
-    return render(request, 'index.html', { 'username': username, 'result_valid' : result, 'predict': pred })
+
+    chart_keys = list(country_data.keys())
+    context = { 'username': username, 
+                'result_valid' : result, 
+                'predict': pred,
+                'x_labels': years,
+                'label1': "\'" + str(chart_keys[0]) + "\'",
+                'label2': "\'" + str(chart_keys[1]) + "\'",
+                'data1': country_data[chart_keys[0]],
+                'data2': country_data[chart_keys[1]],
+              }
+    return render(request, 'index.html', context)

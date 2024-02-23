@@ -38,7 +38,7 @@
         <h1>Form</h1>
 
         <div>
-            <button onclick="toggleHypertension()">+</button><hr>
+            <button onclick="toggleHypertension()">+</button><nobr><hr></nobr>
             <form id="hrp-form" action="process" method="POST">
                 {% csrf_token %}
                 <table>
@@ -230,10 +230,47 @@
         <br>
         <br>
         <br>
-        <h3>Chart JS</h3>
         <div>
-            <canvas id="myChart"></canvas>
+            <canvas id="hrpMortalityChart"></canvas>
         </div>
+        <script>
+            const data = {
+                labels: {{ x_labels | safe }},
+                datasets: [
+                    {
+                        label: {{ label1 | safe}},
+                        data: {{ data1 | safe }},
+                    },
+                    {
+                        label: {{ label2 | safe}},
+                        data: {{ data2 | safe }},
+                    }
+                ]
+            };
+
+            const config = {
+                type: 'line',
+                data: data,
+                options: {
+                    responsive: true,
+                    plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'World-wide Hypertension based Deaths'
+                    }
+                    }
+                },
+            };
+
+            var hrpMortalityChart = new Chart(
+                document.getElementById('hrpMortalityChart'),
+                config
+            );
+        </script>
+
       </section>
 
 
@@ -261,11 +298,11 @@
         
     <!-- {% endblock %}   -->
        
-      
-    </div>
-      <footer>
+     <footer>
         <p><small>Footer Message!</small></p>
       </footer>
+    </div>
+      
     {% load static %}
     <script src="static/javascripts/scale.fix.js"></script>
   </body>
