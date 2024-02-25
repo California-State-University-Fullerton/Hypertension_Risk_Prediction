@@ -53,8 +53,6 @@ def Process(request):
         else:
             country_data[rows['Entity']] = list()
         
-        if len(country_data) > 2:
-            break
     years = list(set(years))
 
     if not request.user.is_authenticated:
@@ -62,7 +60,6 @@ def Process(request):
     (age, sex, cp, fbs, trestbps, thalach, chol, restecg, exang, oldpeak, slope, ca, thal, pred) = (0,0,0,0,0,0,0,0,0,0,0,0,0,0)
     result = False
     if request.method == 'POST':
-        print("Entered Post of Process!")
         age = float(request.POST['Age']) / 98.0
         sex = request.POST['Sex']
         if 'm' in sex.lower():
@@ -90,14 +87,28 @@ def Process(request):
         result = True
 
 
-    chart_keys = list(country_data.keys())
     context = { 'username': username, 
                 'result_valid' : result, 
                 'predict': pred,
                 'x_labels': years,
-                'label1': "\'" + str(chart_keys[0]) + "\'",
-                'label2': "\'" + str(chart_keys[1]) + "\'",
-                'data1': country_data[chart_keys[0]],
-                'data2': country_data[chart_keys[1]],
+                'label1': "\'African Region\'",
+                'label2': "\'Australia\'",
+                'label3': "\'China\'",
+                'label4': "\'Egypt\'",
+                'label5': "\'England\'",
+                'label6': "\'France\'",
+                'label7': "\'India\'",
+                'label8': "\'Ukraine\'",
+                'label9': "\'United States\'",
+                'data1': country_data["African Region (WHO)"],
+                'data2': country_data["Australia"],
+                'data3': country_data["China"],
+                'data4': country_data["Egypt"],
+                'data5': country_data["England"],
+                'data6': country_data["France"],
+                'data7': country_data["India"],
+                'data8': country_data["Ukraine"],
+                'data9': country_data["United States"],
               }
+    
     return render(request, 'index.html', context)

@@ -1,3 +1,6 @@
+document.getElementById("login").addEventListener('click', function (event) {
+            localStorage.setItem("reload_state_var", 3);
+    });
 
 (function ($) {
     "use strict";

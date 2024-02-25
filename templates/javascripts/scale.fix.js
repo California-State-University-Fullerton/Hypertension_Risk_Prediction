@@ -70,8 +70,14 @@ function clickPublish() {
 function toggleHypertension() {
   var x = document.getElementById("hrp-form");
   if(x.style.display == "none") {
+    document.getElementById("toggleHypertensionButton").textContent = "-";
+    document.getElementById("toggleDiabetesButton").textContent = "+";
+    document.getElementById("toggleStrokeButton").textContent = "+";
     x.style.display = "block";
+    document.getElementById("hrp-form-s").style.display = "none";
+    document.getElementById("hrp-form-d").style.display = "none";
   } else {
+    document.getElementById("toggleHypertensionButton").textContent = "+";
     x.style.display = "none";
   }
 }
@@ -79,8 +85,14 @@ function toggleHypertension() {
 function toggleStroke() {
   var x = document.getElementById("hrp-form-s");
   if(x.style.display == "none") {
+    document.getElementById("toggleStrokeButton").textContent = "-";
+    document.getElementById("toggleHypertensionButton").textContent = "+";
+    document.getElementById("toggleDiabetesButton").textContent = "+";
     x.style.display = "block";
+    document.getElementById("hrp-form").style.display = "none";
+    document.getElementById("hrp-form-d").style.display = "none";
   } else {
+    document.getElementById("toggleStrokeButton").textContent = "+";
     x.style.display = "none";
   }
 }
@@ -88,8 +100,15 @@ function toggleStroke() {
 function toggleDiabetes() {
   var x = document.getElementById("hrp-form-d");
   if(x.style.display == "none") {
+    document.getElementById("toggleDiabetesButton").textContent = "-";
+    document.getElementById("toggleStrokeButton").textContent = "+";
+    document.getElementById("toggleHypertensionButton").textContent = "+";
     x.style.display = "block";
+    document.getElementById("hrp-form-s").style.display = "none";
+    document.getElementById("hrp-form").style.display = "none";
   } else {
+    document.getElementById("toggleDiabetesButton").textContent = "+";
     x.style.display = "none";
   }
 }
+
