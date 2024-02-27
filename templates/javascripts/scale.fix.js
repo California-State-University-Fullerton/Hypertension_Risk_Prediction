@@ -62,9 +62,10 @@ document.getElementById('Dashboard_link')
             localStorage.setItem("reload_state_var", 3);
 });
 
-function clickPublish() {
-  document.getElementById('Dashboard_link').click();
-  curr_page = 3;
+function clickResults() {
+  document.getElementById('Results_link').click();
+  localStorage.setItem("reload_state_var", 2);
+  document.getElementById('Results_link').className = "activeLink";
 }
 
 function toggleHypertension() {
