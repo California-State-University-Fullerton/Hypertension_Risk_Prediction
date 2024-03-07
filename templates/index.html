@@ -32,7 +32,16 @@
 
       <section id="Form_content">
         <h1>Form</h1>
-
+        <div>
+            <form id="report" action="process" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <small><i>Upload your relevant medical report or enter manually</i></small><br><br>
+                {{report_form.file}}
+                &nbsp;&nbsp;&nbsp;<button id="predict-button" name="upload" type="submit">Autofill</button>
+            </form>
+        </div>
+        <br>
+        <br>
         <div>
             <button id="toggleHypertensionButton" onclick="toggleHypertension()">-</button><nobr><hr></nobr>
             <form id="hrp-form" style="display: block;" action="process" method="POST">
@@ -688,6 +697,7 @@
     
         {% if result_valid %} 
         
+            
 
          {% endif %}
        

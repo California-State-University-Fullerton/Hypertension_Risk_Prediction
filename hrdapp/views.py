@@ -6,10 +6,16 @@ from .services import get_all_rows
 from collections import OrderedDict
 
 from django.contrib import messages
-from .forms import CreateUserForm
+from .forms import CreateUserForm, FileUploadForm
 
 from joblib import load
 import numpy as np
+
+import os
+from django.conf import settings
+
+import re
+from pdfminer.high_level import extract_pages, extract_text
 
 model = load('./saved_models/model.joblib')
 username = "Unknown"
@@ -45,6 +51,10 @@ def Process(request):
     data = get_all_rows("Test sheet")
     years = list()
     country_data = OrderedDict()
+
+    # pdf report form
+    fileform = FileUploadForm()
+    
     for rows in data:
         years.append(rows['Year'])
         
@@ -65,6 +75,12 @@ def Process(request):
     valid = False
 
     if request.method == 'POST':
+        if request.FILES['file']:
+            uploaded_file = request.FILES['file']
+            uploaded_file_url = os.path.join(settings.MEDIA_DIR, uploaded_file.name)
+            text = extract_text(uploaded_file_url)
+            print(text)
+
         if request.POST.get("hypertensionBtn"):
             try:
                 age = float(request.POST['Age']) / 98.0
@@ -108,6 +124,7 @@ def Process(request):
                 valid = False
 
     context = { 'username': username,
+                'report_form': fileform,
                 'result_hypertension': result_h,
                 'result_hypertension': result_s,
                 'result_hypertension': result_d, 
