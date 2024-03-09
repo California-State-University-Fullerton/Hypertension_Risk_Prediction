@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.core.files.storage import FileSystemStorage
 from .services import get_all_rows
 from collections import OrderedDict
 
@@ -11,7 +12,7 @@ from .forms import CreateUserForm, FileUploadForm
 from joblib import load
 import numpy as np
 
-import os
+import os, shutil
 from django.conf import settings
 
 import re
@@ -45,7 +46,34 @@ def Main(request):
 
 def Logout(request):
     logout(request)
+    folder = 'media'
+    for filename in os.listdir(folder):
+        file_path = os.path.join(folder, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+        except Exception as e:
+            print('Failed to delete %s. Reason: %s' % (file_path, e))
     return redirect('Login')
+
+def extract_data(text, search, type="d", index=0):
+    strings = text.split('\n')
+    pattern = ""
+    for string in strings:
+        if re.search(r'\b{}\b'.format(search), string):
+            pattern = string
+    ext_number = re.compile(r'\d+')
+    if type == "s":
+        ext_number = re.compile(r'\s?(M|Male|F|Female)')
+    if type == "f":
+        ext_number = re.compile(r'\d+\.\d+')
+    match = ext_number.findall(pattern)[index]
+    if match:
+        return match
+    else:
+        return 0
 
 def Process(request):
     data = get_all_rows("Test sheet")
@@ -69,19 +97,65 @@ def Process(request):
         return redirect('Login')
     
     (age, sex, cp, fbs, trestbps, thalach, chol, restecg, exang, oldpeak, slope, ca, thal, pred) = (0,0,0,0,0,0,0,0,0,0,0,0,0,0)
+    (heartDisease, married, work, residence, avgglucose, bmi, smoke) = (0,0,0,0,0,0,0)
+    (chol_question, chol_check, phy_check, fruits, veggy, drinker, health_rate, mental_check, phy_act_check, walking, bp) = (0,0,0,0,0,0,0,0,0,0,0)
     result_h = False
     result_s = False
     result_d = False
     valid = False
+    file_extracted = False
 
     if request.method == 'POST':
-        if request.FILES['file']:
-            uploaded_file = request.FILES['file']
-            uploaded_file_url = os.path.join(settings.MEDIA_DIR, uploaded_file.name)
-            text = extract_text(uploaded_file_url)
-            print(text)
+        if "upload" in request.POST:
+            try:
+                uploaded_file = request.FILES['file']
+                fs = FileSystemStorage()
+                save_url = 'media/' + uploaded_file.name 
+                filename = fs.save(save_url, uploaded_file)
+                uploaded_file_url = os.path.join(settings.MEDIA_DIR, uploaded_file.name)
+                text = extract_text(uploaded_file_url)
+                
+                sex = extract_data(text, "Gender", "s")
+                age = extract_data(text, "Age")
+                cp = extract_data(text, "Cerebral Palsy")
+                fbs = extract_data(text, "Blood Sugar")
+                trestbps = extract_data(text, "Trest BPS")
+                restecg = extract_data(text, "Rest-ECG")
+                thalach = extract_data(text, "Heart Rate")
+                chol = extract_data(text, "Cholesterol")
+                exang = extract_data(text, "Angina")
+                oldpeak = extract_data(text, "Old Peak", "f")
+                slope = extract_data(text, "Slope of ST")
+                ca = extract_data(text, "Calcium Level")
+                thal = extract_data(text, "Thal")
 
-        if request.POST.get("hypertensionBtn"):
+                heartDisease = extract_data(text, "Heart-Related")
+                married = extract_data(text, "Married")
+                work = extract_data(text, "Work Type")
+                residence = extract_data(text, "Residency")
+                avgglucose = extract_data(text, "average glucose level", "f")
+                bmi = extract_data(text, "Body Mass", "f")
+                smoke = extract_data(text, "Smoking")
+
+                chol_question = extract_data(text, "High cholesterol")
+                chol_check = extract_data(text, "cholesterol check")
+                phy_check = extract_data(text, "physical")
+                fruits = extract_data(text, "fruits")
+                veggy = extract_data(text, "vegetables")
+                drinker = extract_data(text, "heavy drinker")
+                health_rate = extract_data(text, "rate yourself in terms of health")
+                mental_check = extract_data(text, "mental health")
+                phy_act_check = extract_data(text, "Physical")
+                walking = extract_data(text, "walking")
+                bp = extract_data(text, "high blood pressure")
+
+                file_extracted = True
+                # print([chol_question, chol_check, phy_check, fruits, veggy, drinker, health_rate, mental_check, phy_act_check, walking, bp])
+            except:
+                print("Error occured while extracting pdf!")
+                file_extracted = False
+
+        if "hypertensionBtn" in request.POST:
             try:
                 age = float(request.POST['Age']) / 98.0
                 sex = request.POST['Sex']
@@ -111,19 +185,21 @@ def Process(request):
             except:
                 valid = False
 
-        if request.POST.get("strokeBtn"):
+        if "strokeBtn" in request.POST:
             try:
                 valid = True
             except:
                 valid = False
 
-        if request.POST.get("diabetesBtn"):
+        if "diabetesBtn" in request.POST:
             try:
                 valid = True
             except:
                 valid = False
 
     context = { 'username': username,
+                'extracted_from_file': file_extracted,
+                'extracted_data': [age, sex, cp, fbs, trestbps, thalach, chol, restecg, exang, oldpeak, slope, ca, thal, heartDisease, married, work, residence, avgglucose, bmi, smoke, chol_question, chol_check, phy_check, fruits, veggy, drinker, health_rate, mental_check, phy_act_check, walking, bp],
                 'report_form': fileform,
                 'result_hypertension': result_h,
                 'result_hypertension': result_s,

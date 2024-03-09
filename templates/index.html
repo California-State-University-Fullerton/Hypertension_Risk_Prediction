@@ -49,62 +49,62 @@
                 <table>
                     <tr>
                     <td><label for"fname">First Name</label>
-                    <input type="text" name="Fname" placeholder="First Name" value="{{request.user}}" readonly></td>
+                    <input type="text" style="cursor: not-allowed;" name="Fname" placeholder="First Name" value="{{request.user}}" readonly></td>
                     </tr>
                     <tr>
                     <td><label for"age">Please Enter you Age</label>
-                    <input type="number" name="Age" placeholder="Age (11-98)" min="11" max="98"></td>
+                    <input type="number" id="age" name="Age" placeholder="Age (11-98)" min="11" max="98"></td>
                     <td><label for"sex">What is you Gender?</label>
-                    <input type="text" name="Sex" placeholder="Gender"></td>
+                    <input type="text" id="gender" name="Sex" placeholder="Gender"></td>
                     </tr>
                     <tr>
                         <td><label for"cp">What is your level of chest pain felt? <div class="tooltip">(info)<span class="tooltiptext"> O for typical
                             angina<br>1 for atypical angina<br>2 for non-anginal pain<br>3 for asymptomatic </span></div></label></td>
-                        <td><input type="number" name="cp" placeholder="Cerebral Palsy (0-3)" min="0" max="3"></td>
+                        <td><input type="number" id="cp" name="cp" placeholder="Cerebral Palsy (0-3)" min="0" max="3"></td>
                     </tr>
                     <tr>
                         <td><label for"fbs">What is your Blood Sugar while Fasting? <div class="tooltip">(info)<span class="tooltiptext"> 1 signifying levels above 120 mg/dL<br>0 indicating levels below </span></div></label></td>
-                        <td><input type="number" name="fbs" placeholder="FBS (0/1)" min="0" max="1"></td>
+                        <td><input type="number" id="fbs" name="fbs" placeholder="FBS (0/1)" min="0" max="1"></td>
                     </tr>
                     <tr>
                         <td><label for"chol">What is your Cholestrol level?</label></td>
-                        <td><input type="number" name="chol" placeholder="Cholestrol (125-570)" min="125" max="570"></td>
+                        <td><input type="number" id="chol" name="chol" placeholder="Cholestrol (125-570)" min="125" max="570"></td>
                     </tr>
                     <tr>
                         <td><label for"trestbps">What is the Rise in your Blood Pressure? <div class="tooltip">(info)<span class="tooltiptext"> Numerical measurement of the patient's blood pressure <br>at rest, recorded in mm/HG</span></div></label></td>
-                        <td><input type="number" name="trestbps" placeholder="Trest-BPS (94-200)" min="94" max="200"></td>
+                        <td><input type="number" id="trestbps" name="trestbps" placeholder="Trest-BPS (94-200)" min="94" max="200"></td>
                     </tr>
                     <tr>
                         <td><label for"restecg">What is your Electro-Cardiograph while Resting? <div class="tooltip">(info)<span class="tooltiptext"> O for normal<br>1 for ST-T wave abnormalities<br>2 for indications of probable or definite left ventricular<br>
                             hypertrophy according to Estes' criteria </span></div></label></td>
-                        <td><input type="number" name="restecg" placeholder="Rest-ECG (0-2)" min="0" max="2"></td>
+                        <td><input type="number" id="restecg" name="restecg" placeholder="Rest-ECG (0-2)" min="0" max="2"></td>
                     </tr>
                     <tr>
                         <td><label for"thalach">What is your Heart Rate?</label></td>
-                        <td><input type="number" name="thalach" placeholder="Heart Rate (71-202)" min="71" max="202"></td>
+                        <td><input type="number" id="thalach" name="thalach" placeholder="Heart Rate (71-202)" min="71" max="202"></td>
                     </tr>
                     <tr>
                         <td><label for"exang">What is the value of Exercise Induced Angina? <div class="tooltip">(info)<span class="tooltiptext"> Categorical feature denoting whether<br>exercise-induced angina is present.<br>O signifies no<br>1
                             signifies yes </span></div></label></td>
-                        <td><input type="number" name="exang" placeholder="Exang (0/1)" min="0" max="1"></td>
+                        <td><input type="number" id="exang" name="exang" placeholder="Exang (0/1)" min="0" max="1"></td>
                     </tr>
                     <tr>
                         <td><label for"oldpeak">What is your Depression caused by activity?<div class="tooltip">(info)<span class="tooltiptext"> Numeric value indicating exercise-induced<br>ST-depression relative to the rest state. </span></div></label></td>
-                        <td><input type="number" step="0.1" name="oldpeak" placeholder="Old Peak Value (0.0 - 6.2)" min="0.0" max="6.2"></td>
+                        <td><input type="number" step="0.1" id="oldpeak" name="oldpeak" placeholder="Old Peak Value (0.0 - 6.2)" min="0.0" max="6.2"></td>
                     </tr>
                     <tr>
                         <td><label for"slope">What is the Slope of your ST segment during peak exercise? <div class="tooltip">(info)<span class="tooltiptext"> Categorical attribute representing the slope<br>of the ST segment during peak exercise<br>O for up-sloping<br>1 for flat<br>2 for down-sloping </span></div></label></td>
-                        <td><input type="number" name="slope" placeholder="Slope (0-2)" min="0" max="2"></td>
+                        <td><input type="number" id="slope" name="slope" placeholder="Slope (0-2)" min="0" max="2"></td>
                     </tr>
                     <tr>
                         <td><label for"ca">What are Calcium Levels? <div class="tooltip">(info)<span class="tooltiptext"> Calcium levels in your major blood vessels </span></div></label></td>
-                        <td><input type="number" name="ca" placeholder="Calcium Level (0-4)" min="0" max="4"></td>
+                        <td><input type="number" id="ca" name="ca" placeholder="Calcium Level (0-4)" min="0" max="4"></td>
                     </tr>
                     
                     <tr>
                         <td><label for"thal">Enter your Blood Disorder that reduces production of hemoglobin? <div class="tooltip">(info)<span class="tooltiptext"> O for NULL<br>1 for normal blood flow<br>2 for fixed defects (indicating no blood flow<br>in a portion of the heart)<br>3 for reversible
                             defects (indicating abnormal<br>but observable blood flow).<br>4 for hyper </span></div> </label></td>
-                        <td><input type="number" name="thal" placeholder="Thal (0-4)" min="0" max="4"></td>
+                        <td><input type="number" id="thal" name="thal" placeholder="Thal (0-4)" min="0" max="4"></td>
                     </tr>
 
                     <td><br><br><button id="predict-button" name="hypertensionBtn" type="submit">Predict Hypertension</button></td>
@@ -117,35 +117,35 @@
                 <table>
                     <tr>
                         <td><label for"fname">First Name</label></td>
-                        <td><input type="text" name="Fname" placeholder="First Name" value="{{request.user}}" readonly></td>
+                        <td><input type="text" style="cursor: not-allowed;" name="Fname" placeholder="First Name" value="{{request.user}}" readonly></td>
                     </tr>
                     <tr>
                         <td><label for"heartdisease">Did you ever have any Heart <br>Related Disease? <div class="tooltip">(info)<span class="tooltiptext"> Coronary Heart Disease (CHD) or<br>Myocardial infraction (MI)<br>0 for No<br>1 for Yes </span></div> </label></td>
-                        <td><input type="number" name="heartdisease" placeholder="Heart Disease (0/1)" min="0" max="1"></td>
+                        <td><input type="number" id="heartdisease" name="heartdisease" placeholder="Heart Disease (0/1)" min="0" max="1"></td>
                     </tr>
                     <tr>
                         <td><label for"married">Are you now or in past Married? </td>
-                        <td><input type="number" name="married" placeholder="Married (0/1)" min="0" max="1"></td>
+                        <td><input type="number" id="married" name="married" placeholder="Married (0/1)" min="0" max="1"></td>
                     </tr>
                     <tr>
                         <td><label for"worktype">What is your Work Type? <div class="tooltip">(info)<span class="tooltiptext">0 for Government Job<br>1 for Never Worked<br>2 for Private job<br>3 for Self-employed<br>4 if you are a student</span></div></label></td>
-                        <td><input type="number" name="worktype" placeholder="Work Type (0-4)" min="0" max="4"></td>
+                        <td><input type="number" id="worktype" name="worktype" placeholder="Work Type (0-4)" min="0" max="4"></td>
                     </tr>
                     <tr>
                         <td><label for"residencytype">What is your Residency Type? <div class="tooltip">(info)<span class="tooltiptext">0 for Rural<br>1 for Urban</span></div></label></td>
-                        <td><input type="number" name="residencytype" placeholder="Residency Type (0/1)" min="0" max="1"></td>
+                        <td><input type="number" id="residencytype" name="residencytype" placeholder="Residency Type (0/1)" min="0" max="1"></td>
                     </tr>
                     <tr>
                         <td><label for"glucose">What is your average glucose level? </td>
-                        <td><input type="number" step="0.1" name="glucose" placeholder="Glucose Level (55-272)" min="55" max="272"></td>
+                        <td><input type="number" step="0.1" id="glucose" name="glucose" placeholder="Glucose Level (55-272)" min="55" max="272"></td>
                     </tr>
                     <tr>
                         <td><label for"bmi">What is your Body Mass Index? </label></td>
-                        <td><input type="number" step="0.1" name="bmi" placeholder="BMI (11-92)" min="11" max="92"></td>
+                        <td><input type="number" step="0.1" id="bmi" name="bmi" placeholder="BMI (11-92)" min="11" max="92"></td>
                     </tr>
                     <tr>
                         <td><label for"smoking">What is your Smoking Status? </label></td>
-                        <td><input type="number" name="smoking" placeholder="Smoking Status (0/1)" min="0" max="1"></td>
+                        <td><input type="number" id="smoking" name="smoking" placeholder="Smoking Status (0/1)" min="0" max="1"></td>
                     </tr>
                     <tr>
                         <td><br><br><button id="predict-button" name="strokeBtn" type="submit">Predict Stroke</button></td>
@@ -158,52 +158,52 @@
                 <table>
                     <tr>
                         <td><label for"fname">First Name</label></td>
-                        <td><input type="text" name="Fname" placeholder="First Name" value="{{request.user}}" readonly></td>
+                        <td><input type="text" style="cursor: not-allowed;" name="Fname" placeholder="First Name" value="{{request.user}}" readonly></td>
                     </tr>
                     <tr>
                         <td><label for"highchol">Do you think you have High Cholestrol? </label></td>
-                        <td><input type="number" name="highchol" placeholder="High Cholestrol (0/1)" min="0" max="1"></td>
+                        <td><input type="number" id="highchol" name="highchol" placeholder="High Cholestrol (0/1)" min="0" max="1"></td>
                     </tr>
                     <tr>
-                        <td><label for"cholcheck">Do you think you have High <br>Cholestrol? <div class="tooltip">(info)<span class="tooltiptext">0 for No Cholestrol check in<br>last 5 years<br>1 for Yes, Cholestrol check in<br>last 5 years</span></div></label></td>
-                        <td><input type="number" name="cholcheck" placeholder="Cholestrol Check (0/1)" min="0" max="1"></td>
+                        <td><label for"cholcheck">When did you last check your <br>Cholestrol? <div class="tooltip">(info)<span class="tooltiptext">0 for No Cholestrol check in<br>last 5 years<br>1 for Yes, Cholestrol check in<br>last 5 years</span></div></label></td>
+                        <td><input type="number" id="cholcheck" name="cholcheck" placeholder="Cholestrol Check (0/1)" min="0" max="1"></td>
                     </tr>
                     <tr>
                         <td><label for"physactivity">Have you done any physical activity in <br>last 30 days? <div class="tooltip">(info)<span class="tooltiptext">Now thinking about your physical health,<br>which includes physical illness and injury, <br>for how many days during the <br>past 30 days was your physical
                             <br>health not good? scale <br>1-30 days</span></div></label></td>
-                        <td><input type="number" name="physactivity" placeholder="Physical Activity (0/1)" min="0" max="1"></td>
+                        <td><input type="number" id="physactivity" name="physactivity" placeholder="Physical Activity (0/1)" min="0" max="1"></td>
                     </tr>
                     <tr>
                         <td><label for"fruits">Do you consume fruits 1 or <br>more times per day? <div class="tooltip">(info)<span class="tooltiptext">0 for No<br>1 for Yes</span></div></label></td>
-                        <td><input type="number" name="fruits" placeholder="Fruits (0/1)" min="0" max="1"></td>
+                        <td><input type="number" id="fruits" name="fruits" placeholder="Fruits (0/1)" min="0" max="1"></td>
                     </tr>
                     <tr>
                         <td><label for"veggies">Do you consume vegetables 1 or <br>more times per day? <div class="tooltip">(info)<span class="tooltiptext">0 for No<br>1 for Yes</span></div></label></td>
-                        <td><input type="number" name="veggies" placeholder="Vegetables (0/1)" min="0" max="1"></td>
+                        <td><input type="number" id="veggies" name="veggies" placeholder="Vegetables (0/1)" min="0" max="1"></td>
                     </tr>
                     <tr>
                         <td><label for"alcohol">Do you think you are a heavy drinker?<div class="tooltip">(info)<span class="tooltiptext">Heavy drinkers (adult men having<br>more than 14 drinks per<br>week and adult women having<br>more than 7 drinks per week)</span></div></label></td>
-                        <td><input type="number" name="alcohol" placeholder="Alcohol (0/1)" min="0" max="1"></td>
+                        <td><input type="number" id="alcohol" name="alcohol" placeholder="Alcohol (0/1)" min="0" max="1"></td>
                     </tr>
                     <tr>
                         <td><label for"genhealth">How much do you rate yourself in terms of health?<div class="tooltip">(info)<span class="tooltiptext">1 = excellent<br>2 = very good<br>3 = good<br>4 = fair<br>5 = poor</span></div></label></label></td>
-                        <td><input type="number" name="genhealth" placeholder="Health (1-5)" min="1" max="5"></td>
+                        <td><input type="number" id="genhealth" name="genhealth" placeholder="Health (1-5)" min="1" max="5"></td>
                     </tr>
                     <tr>
                         <td><label for"menhealth">How many days in the last <br>30 days was your mental <br>health not good?<div class="tooltip">(info)<span class="tooltiptext">Think on this based on stress, <br>depression, and problems with <br>emotions</span></div></label></td>
-                        <td><input type="number" name="menhealth" placeholder="No. of days (0-30)" min="0" max="30"></td>
+                        <td><input type="number" id="menhealth" name="menhealth" placeholder="No. of days (0-30)" min="0" max="30"></td>
                     </tr>
                     <tr>
                         <td><label for"phyhealth">How many days in the last <br>30 days was your Physical <br>health not good?<div class="tooltip">(info)<span class="tooltiptext">Think on this based on physical <br>illness, injury</span></div></label></td>
-                        <td><input type="number" name="phyhealth" placeholder="No. of days (0-30)" min="0" max="30"></td>
+                        <td><input type="number" id="phyhealth" name="phyhealth" placeholder="No. of days (0-30)" min="0" max="30"></td>
                     </tr>
                     <tr>
                         <td><label for"diffwalk">Do you any serious difficulty walking<br>or climbing stairs?</label></td>
-                        <td><input type="number" name="diffwalk" placeholder="Yes/No (0/1)" min="0" max="1"></td>
+                        <td><input type="number" id="diffwalk" name="diffwalk" placeholder="Yes/No (0/1)" min="0" max="1"></td>
                     </tr>
                     <tr>
                         <td><label for"highBp">Do you have high blood pressure?</label></td>
-                        <td><input type="number" name="highBp" placeholder="Yes/No (0/1)" min="0" max="1"></td>
+                        <td><input type="number" id="highBp" name="highBp" placeholder="Yes/No (0/1)" min="0" max="1"></td>
                     </tr>
                     <tr>
                         <td><br><br><button id="predict-button" name="diabetesBtn" type="submit">Predict Diabetes</button></td>
@@ -696,23 +696,87 @@
         <h1>Results</h1>
     
         {% if result_valid %} 
-        
-            
+        <h2 id="prediction">Prediction was {{result_hypertension}}</h2> 
+        <h3 style="color: gray;">(True: Hypertension Risk is High | False: Hypertension Risk is low)</h3>
+            {% if result_hypertension %}
+                <script>
+                    document.getElementById("prediction").style = "color: red";
+                </script>
+            {% else %}
+                <script>
+                    document.getElementById("prediction").style = "color: green";
+                </script>
+            {% endif %}  
+        {% endif %}
 
-         {% endif %}
-       
-        <h2>{{result_hypertension}}</h2><br>
+        <img src="static/assets/heatmap.png">
+
     </section>
     <!-- {% block content %} -->
         
     <!-- {% endblock %}   -->
-       
+
      <footer>
         <p><img src="static/assets/CalStateFullerton-CMYK-R.jpg" alt="Csuf Logo" height="15px"> All Rights Reserved.</p>
       </footer>
     </div>
-      
     {% load static %}
     <script src="static/javascripts/scale.fix.js"></script>
+
+    {% if result_valid %} 
+        <script>
+            if( document.getElementById("Results_link").classList.contains('inactiveLink') ) {
+                document.getElementById("Results_link").classList.remove('inactiveLink');
+                document.getElementById("Results_link").classList.add('activeLink')
+            }
+            clickResults();
+        </script>
+    {% else %}
+
+        <script>
+            if( document.getElementById("Results_link").classList.contains('activeLink') ) {
+                document.getElementById("Results_link").classList.remove('activeLink');
+                document.getElementById("Results_link").classList.add('inactiveLink')
+            }
+        </script> 
+    {% endif %}
+
+    {% if extracted_from_file %}
+        <script>
+            document.getElementById("age").value = {{ extracted_data.0 }};
+            document.getElementById("gender").value = "{{ extracted_data.1 }}";
+            document.getElementById("cp").value = {{ extracted_data.2 }};
+            document.getElementById("fbs").value = {{ extracted_data.3 }};
+            document.getElementById("trestbps").value = {{ extracted_data.4 }};
+            document.getElementById("thalach").value = {{ extracted_data.5 }};
+            document.getElementById("chol").value = {{ extracted_data.6 }};
+            document.getElementById("restecg").value = {{ extracted_data.7 }};
+            document.getElementById("exang").value = {{ extracted_data.8 }};
+            document.getElementById("oldpeak").value = {{ extracted_data.9 }};
+            document.getElementById("slope").value = {{ extracted_data.10 }};
+            document.getElementById("ca").value = {{ extracted_data.11 }};
+            document.getElementById("thal").value = {{ extracted_data.12 }};
+
+            document.getElementById("heartdisease").value = {{ extracted_data.13 }};
+            document.getElementById("married").value = {{ extracted_data.14 }};
+            document.getElementById("worktype").value = {{ extracted_data.15 }};
+            document.getElementById("residencytype").value = {{ extracted_data.16 }};
+            document.getElementById("glucose").value = {{ extracted_data.17 }};
+            document.getElementById("bmi").value = {{ extracted_data.18 }};
+            document.getElementById("smoking").value = {{ extracted_data.19 }};
+
+            document.getElementById("highchol").value = {{ extracted_data.20 }};
+            document.getElementById("cholcheck").value = {{ extracted_data.21 }};
+            document.getElementById("physactivity").value = {{ extracted_data.22 }};
+            document.getElementById("fruits").value = {{ extracted_data.23 }};
+            document.getElementById("veggies").value = {{ extracted_data.24 }};
+            document.getElementById("alcohol").value = {{ extracted_data.25 }};
+            document.getElementById("genhealth").value = {{ extracted_data.26 }};
+            document.getElementById("menhealth").value = {{ extracted_data.27 }};
+            document.getElementById("phyhealth").value = {{ extracted_data.28 }};
+            document.getElementById("diffwalk").value = {{ extracted_data.29 }};
+            document.getElementById("highBp").value = {{ extracted_data.30 }};
+        </script>
+    {% endif %}
   </body>
 </html>
