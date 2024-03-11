@@ -696,8 +696,8 @@
         <h1>Results</h1>
     
         {% if result_valid %} 
-        <h2 id="prediction">Prediction was {{result_hypertension}}</h2> 
-        <h3 style="color: gray;">(True: Hypertension Risk is High | False: Hypertension Risk is low)</h3>
+        <h2 id="prediction">Prediction for {{type}} risk was {{result_hypertension|yesno:"Positive,Negative"}}</h2> 
+        <h3 style="color: gray;">(Positive: {{type}} Risk is High | Negative: {{type}} Risk is low)</h3>
             {% if result_hypertension %}
                 <script>
                     document.getElementById("prediction").style = "color: red";
@@ -711,14 +711,23 @@
 
         <img src="static/assets/heatmap.png">
 
+        <form id="model-form" action="process" method="POST">
+            
+        </form>
+
+        <p>The prediction of the model was derived from an analysis of the features depicted in the chart above. The topmost features highlighted in the chart exerted the greatest influence on determining the model's prediction. As the features descend in the chart, their impact on the prediction gradually diminishes.</p>
+        <p>Change your model from the dropdown given below to determine the prediction using a different model. Please refer to the Area under the curve of Receiver Operating Characteristic to understand the behaviors of different models.</p>
+    
+        <img src="static/assets/roc_auc.png">
+
     </section>
     <!-- {% block content %} -->
         
     <!-- {% endblock %}   -->
 
-     <footer>
+    <footer>
         <p><img src="static/assets/CalStateFullerton-CMYK-R.jpg" alt="Csuf Logo" height="15px"> All Rights Reserved.</p>
-      </footer>
+    </footer>
     </div>
     {% load static %}
     <script src="static/javascripts/scale.fix.js"></script>

@@ -9,9 +9,10 @@ from collections import OrderedDict
 from django.contrib import messages
 from .forms import CreateUserForm, FileUploadForm
 
+import xgboost
 from joblib import load
 import numpy as np
-
+import time
 import os, shutil
 from django.conf import settings
 
@@ -104,60 +105,63 @@ def Process(request):
     result_d = False
     valid = False
     file_extracted = False
+    result_type = ""
 
     if request.method == 'POST':
         if "upload" in request.POST:
-            try:
-                uploaded_file = request.FILES['file']
-                fs = FileSystemStorage()
-                save_url = 'media/' + uploaded_file.name 
-                filename = fs.save(save_url, uploaded_file)
-                uploaded_file_url = os.path.join(settings.MEDIA_DIR, uploaded_file.name)
-                text = extract_text(uploaded_file_url)
-                
-                sex = extract_data(text, "Gender", "s")
-                age = extract_data(text, "Age")
-                cp = extract_data(text, "Cerebral Palsy")
-                fbs = extract_data(text, "Blood Sugar")
-                trestbps = extract_data(text, "Trest BPS")
-                restecg = extract_data(text, "Rest-ECG")
-                thalach = extract_data(text, "Heart Rate")
-                chol = extract_data(text, "Cholesterol")
-                exang = extract_data(text, "Angina")
-                oldpeak = extract_data(text, "Old Peak", "f")
-                slope = extract_data(text, "Slope of ST")
-                ca = extract_data(text, "Calcium Level")
-                thal = extract_data(text, "Thal")
+            # try:
+            uploaded_file = request.FILES['file']
+            fs = FileSystemStorage()
+            save_url = 'media/' + uploaded_file.name 
+            filename = fs.save(save_url, uploaded_file)
+            filename = filename[6:]
+            uploaded_file_url = os.path.join(settings.MEDIA_DIR, filename)
+            text = extract_text(uploaded_file_url)
+            
+            sex = extract_data(text, "Gender", "s")
+            age = extract_data(text, "Age")
+            cp = extract_data(text, "Cerebral Palsy")
+            fbs = extract_data(text, "Blood Sugar")
+            trestbps = extract_data(text, "Trest BPS")
+            restecg = extract_data(text, "Rest-ECG")
+            thalach = extract_data(text, "Heart Rate")
+            chol = extract_data(text, "Cholesterol")
+            exang = extract_data(text, "Angina")
+            oldpeak = extract_data(text, "Old Peak", "f")
+            slope = extract_data(text, "Slope of ST")
+            ca = extract_data(text, "Calcium Level")
+            thal = extract_data(text, "Thal")
 
-                heartDisease = extract_data(text, "Heart-Related")
-                married = extract_data(text, "Married")
-                work = extract_data(text, "Work Type")
-                residence = extract_data(text, "Residency")
-                avgglucose = extract_data(text, "average glucose level", "f")
-                bmi = extract_data(text, "Body Mass", "f")
-                smoke = extract_data(text, "Smoking")
+            heartDisease = extract_data(text, "Heart-Related")
+            married = extract_data(text, "Married")
+            work = extract_data(text, "Work Type")
+            residence = extract_data(text, "Residency")
+            avgglucose = extract_data(text, "average glucose level", "f")
+            bmi = extract_data(text, "Body Mass", "f")
+            smoke = extract_data(text, "Smoking")
 
-                chol_question = extract_data(text, "High cholesterol")
-                chol_check = extract_data(text, "cholesterol check")
-                phy_check = extract_data(text, "physical")
-                fruits = extract_data(text, "fruits")
-                veggy = extract_data(text, "vegetables")
-                drinker = extract_data(text, "heavy drinker")
-                health_rate = extract_data(text, "rate yourself in terms of health")
-                mental_check = extract_data(text, "mental health")
-                phy_act_check = extract_data(text, "Physical")
-                walking = extract_data(text, "walking")
-                bp = extract_data(text, "high blood pressure")
+            chol_question = extract_data(text, "High cholesterol")
+            chol_check = extract_data(text, "cholesterol check")
+            phy_check = extract_data(text, "physical")
+            fruits = extract_data(text, "fruits")
+            veggy = extract_data(text, "vegetables")
+            drinker = extract_data(text, "heavy drinker")
+            health_rate = extract_data(text, "rate yourself in terms of health")
+            mental_check = extract_data(text, "mental health")
+            phy_act_check = extract_data(text, "Physical")
+            walking = extract_data(text, "walking")
+            bp = extract_data(text, "high blood pressure")
 
-                file_extracted = True
+            file_extracted = True
+            print([age, sex, cp, fbs, trestbps, thalach, chol, restecg, exang, oldpeak, slope, ca, thal])
                 # print([chol_question, chol_check, phy_check, fruits, veggy, drinker, health_rate, mental_check, phy_act_check, walking, bp])
-            except:
-                print("Error occured while extracting pdf!")
-                file_extracted = False
+            # except:
+            #     print("Error occured while extracting pdf!")
+            #     file_extracted = False
 
         if "hypertensionBtn" in request.POST:
             try:
-                age = float(request.POST['Age']) / 98.0
+                age = float(request.POST['Age']) / 87.0
                 sex = request.POST['Sex']
                 if 'm' in sex.lower():
                     sex = 1
@@ -165,45 +169,53 @@ def Process(request):
                     sex = 0
                 cp = float(request.POST['cp']) / 3.0
                 fbs = float(request.POST['fbs']) / 1.0
-                trestbps = float(request.POST['trestbps']) / 200.0
+                trestbps = float(request.POST['trestbps']) / 106.0
                 restecg = float(request.POST['restecg']) / 2.0
-                thalach = float(request.POST['thalach']) / 202.0
-                chol = float(request.POST['chol']) / 564.0
+                thalach = float(request.POST['thalach']) / 131.0
+                chol = float(request.POST['chol']) / 438.0
                 exang = float(request.POST['exang']) / 1.0
                 oldpeak = float(request.POST['oldpeak']) / 6.2
                 slope = float(request.POST['slope']) / 2.0
-                ca = float(request.POST['ca']) / 4.0
+                ca = float(request.POST['ca']) / 3.0
                 thal = float(request.POST['thal']) / 3.0
 
-                # print(float(age), float(sex), float(cp), float(fbs), float(trestbps), 
-                #      float(restecg), float(exang), float(oldpeak), float(slope), float(ca), float(thal))
+                print(float(age), float(sex), float(cp), float(fbs), float(trestbps), 
+                    float(restecg), float(exang), float(oldpeak), float(slope), float(ca), float(thal))
                 inp_data = np.array([[float(age), float(sex), float(cp), float(trestbps), float(chol), 
                                     float(fbs), float(restecg), float(thalach), float(exang), 
                                     float(oldpeak), float(slope), float(ca), float(thal)]])
-                result_h = model.predict(inp_data)[0]
+                
+                inp_data = xgboost.DMatrix(inp_data)
+                result_h = model.predict(inp_data)
+                result_h = bool(round(result_h[0]))
                 valid = True
             except:
+                print("Error occured while predicting!")
                 valid = False
+            result_type = "Hypertension"
 
         if "strokeBtn" in request.POST:
             try:
                 valid = True
             except:
                 valid = False
+            result_type = "Stroke"
 
         if "diabetesBtn" in request.POST:
             try:
                 valid = True
             except:
                 valid = False
+            result_type = "Diabetes"
 
     context = { 'username': username,
                 'extracted_from_file': file_extracted,
                 'extracted_data': [age, sex, cp, fbs, trestbps, thalach, chol, restecg, exang, oldpeak, slope, ca, thal, heartDisease, married, work, residence, avgglucose, bmi, smoke, chol_question, chol_check, phy_check, fruits, veggy, drinker, health_rate, mental_check, phy_act_check, walking, bp],
                 'report_form': fileform,
+                'type': result_type,
                 'result_hypertension': result_h,
-                'result_hypertension': result_s,
-                'result_hypertension': result_d, 
+                'result_stroke': result_s,
+                'result_diabetes': result_d, 
                 'result_valid' : valid,
                 'x_labels': years,
                 'label1': "\'African Region\'",
