@@ -16,7 +16,7 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1>Hypertension&nbsp;Risk <br>Prediction<br><small><i>using Machine Learning Models</i></small></h1>
+        <h1>Hypertension&nbsp;Risk <br>Prediction&nbsp;&nbsp;<br><small><i>using Machine Learning Models</i></small></h1>
         <br>
         <br>
         <div>
@@ -24,11 +24,37 @@
             <a id="Dashboard_link" href="#">Dashboard</a> |
             <a id="Form_link" href="#">Form</a>  |
             <a id="Results_link" href="#" class="inactiveLink">Results</a> |
-            <a id="logout_user" href="{% url 'Logout' %}">Logout</a>
+            <a id="logout_user" href="{% url 'Logout' %}">Logout</a> |
+            <a id="about" href="#">About</a>
         </div>
         </div>
         <br>
       </header>
+
+      <section id="About_content">
+        <h1>About</h1>
+        <div class="container">
+            <div class="image">
+                <img src="static/assets/CEDDI.png" width="200" height="200">
+            </div>
+            <div class="text">
+                <p align="justify">
+                    At CEDDI Lab (The Computational Epidemiology, Data, and Disaster Intelligence Lab) we pioneer the development of data-driven computational models and tools to illuminate the intricate dynamics of disease spread patterns. Our mission encompasses the creation of cutting-edge algorithms and simulation tools tailored for evaluating the efficacy of disease intervention strategies.
+                </p>
+                <ul>
+                    <li>We specialize in developing sophisticated computational models to elucidate the propagation patterns of various diseases. These models are instrumental in understanding transmission dynamics and assessing the effectiveness of control measures.</li>
+                    <li>Leveraging advanced machine learning techniques, we forecast potential outbreaks of specific diseases in targeted localities. This proactive approach enables timely intervention and containment strategies.</li>
+                    <li>Our innovative mobile applications serve as invaluable tools for early detection and surveillance of diseases. Examples include apps designed for the early detection of Lassa Fever in remote regions of West Africa and enhancing reporting and care for Gender-Based Violence (GBV) and HIV+ individuals in rural low- and middle-income countries (LMICs).</li>
+                    <li>We adapt machine learning algorithms for geo-clustering cities and strategically pre-positioning depots to optimize emergency response and disaster management efforts. This ensures swift and effective responses in times of crisis.</li>
+                    <li>Recognizing the pivotal role of social networks in shaping public perceptions, we develop robust tools for detecting and combating misinformation. Our initiatives aim to safeguard public health by promoting accurate information dissemination.</li>
+                    <li>Harnessing the power of social networks, we employ real-time monitoring and analysis techniques to detect potential disease outbreaks swiftly. This proactive approach facilitates prompt intervention and containment measures, mitigating the spread of infectious diseases.</li>
+                </ul>
+                <p align="justify">
+                    CEDDI Lab stands at the forefront of interdisciplinary research, bridging the realms of epidemiology, data science, and disaster management. Our commitment to innovation and excellence drives us to continuously explore novel avenues for safeguarding public health and enhancing disaster resilience.
+                </p>
+            </div>
+        </div>
+      </section>
 
       <section id="Form_content">
         <h1>Form</h1>
@@ -38,7 +64,14 @@
                 <small><i>Upload your relevant medical report or enter manually</i></small><br><br>
                 {{report_form.file}}
                 &nbsp;&nbsp;&nbsp;<button id="predict-button" name="upload" type="submit">Autofill</button>
+                <br><br><br><small><i>Change the model to one of the mentioned in the dropdown</i></small><br><br>
             </form>
+            <select name="mlmodels" id="models">
+                <option value="xgboost">xgboost</option>
+                <!-- <option value="random">Random Forest</option> -->
+                <option value="kmeans">KMeans</option>
+                <option value="catboost">Cat Boost</option>
+            </select>
         </div>
         <br>
         <br>
@@ -47,6 +80,7 @@
             <form id="hrp-form" style="display: block;" action="process" method="POST">
                 {% csrf_token %}
                 <table>
+                    <input type="hidden" id="hypertension_selected_model" name="selected_model" value="xgboost">
                     <tr>
                     <td><label for"fname">First Name</label>
                     <input type="text" style="cursor: not-allowed;" name="Fname" placeholder="First Name" value="{{request.user}}" readonly></td>
@@ -115,6 +149,10 @@
             <form id="hrp-form-s" style="display: none;" action="process" method="POST">
                 {% csrf_token %}
                 <table>
+                    <input type="hidden" id="stroke_selected_model" name="selected_model" value="xgboost">
+                    <input type="hidden" name="Age" value="{{extracted_data.0}}">
+                    <input type="hidden" name="Sex" value="{{extracted_data.1}}">
+                    <input type="hidden" name="hypertension_pred" value="{{result_hypertension}}">
                     <tr>
                         <td><label for"fname">First Name</label></td>
                         <td><input type="text" style="cursor: not-allowed;" name="Fname" placeholder="First Name" value="{{request.user}}" readonly></td>
@@ -156,6 +194,13 @@
             <form id="hrp-form-d" style="display: none;" action="process" method="POST">
                 {% csrf_token %}
                 <table>
+                    <input type="hidden" id="diabetes_selected_model" name="selected_model" value="xgboost">
+                    <input type="hidden" name="Age" value="{{extracted_data.0}}">
+                    <input type="hidden" name="Sex" value="{{extracted_data.1}}">
+                    <input type="hidden" name="stroke_pred" value="{{result_stroke}}">
+                    <input type="hidden" name="Bmi" value="{{extracted_data.18}}">
+                    <input type="hidden" name="smoke" value="{{extracted_data.19}}">
+                    <input type="hidden" name="heartdisease" value="{{extracted_data.13}}">
                     <tr>
                         <td><label for"fname">First Name</label></td>
                         <td><input type="text" style="cursor: not-allowed;" name="Fname" placeholder="First Name" value="{{request.user}}" readonly></td>
@@ -216,17 +261,65 @@
       <section id="Dashboard_content">
         <h1>Dashboard</h1>
 
-        <p align="justify">Utilizing Mapbox data visualization, our hypertension dashboard offers a comprehensive view of high-risk areas for hypertension in California over the past year. By overlaying geographical information with reported cases, we provide stakeholders with a dynamic tool to identify and address regions most affected by hypertension. This interactive dashboard not only highlights areas of concern but also empowers decision-makers to allocate resources efficiently, implement targeted interventions, and ultimately improve public health outcomes in California.</p>
+        <h3><b><i>Feature Importance for Hypertension Prediction Models</i></b></h3>
+        <p align="justify">In the following section, we present a visualization through donut charts depicting feature importance in hypertension risk prediction. This visualization illuminates the impact each feature exerts on the final output of the predictive model. By highlighting the relative significance of various factors, we gain valuable insights into the determinants of hypertension risk. This elucidation not only enhances our understanding of the underlying mechanisms driving hypertensive conditions but also informs the development of more effective preventive strategies and interventions.</p>
+        
+        <table>
+            <tr>
+                <td>
+                    <h4 align="center">XGBoost</h4>
+                    <div>
+                        <canvas id="hrpMortalityChart2"></canvas>
+                    </div>
+                </td>
+                <td>
+                    <h4 align="center">CatBoost</h4>
+                    <div>
+                        <canvas id="hrpMortalityChart3"></canvas>
+                    </div>
+                </td>
+            </tr>
+        </table>
 
-        <div id='map' style='width: 600px; height: 500px;'></div>
         <script>
-            mapboxgl.accessToken = 'pk.eyJ1Ijoic2FtYXJ0aC1oYWx5YWwiLCJhIjoiY2xzbzJweGwwMGFlbzJqcDdsZDZqYzVieSJ9.D4y1vzj-_g8b5tEYtcnmFw';
-            var map = new mapboxgl.Map({
-                container: 'map',
-                style: 'mapbox://styles/samarth-halyal/clssc62gj001a01r5h9nbauwp',
-                zoom: 4.5,
-                center: [-118.829648, 35.724691]
-            });
+            const data1 = {
+                labels: {{ feature_important_xgboost_names | safe }},
+                datasets: [{
+                    label: 'Feature Importance',
+                    data: {{ feature_important_xgboost | safe  }},
+                    backgroundColor: {{  feature_important_xgboost_colors | safe }},
+                    hoverOffset: 4
+                }]
+            };
+
+            const config1 = {
+                type: 'doughnut',
+                data: data1,
+            };
+
+            const data2 = {
+                labels: {{ feature_important_catboost_names | safe }},
+                datasets: [{
+                    label: 'Feature Importance',
+                    data: {{ feature_important_catboost | safe  }},
+                    backgroundColor: {{  feature_important_catboost_colors | safe }},
+                    hoverOffset: 4
+                }]
+            };
+
+            const config2 = {
+                type: 'doughnut',
+                data: data2,
+            };
+
+            var hrpMortalityChart2 = new Chart(
+                document.getElementById('hrpMortalityChart2'),
+                config1
+            );
+            var hrpMortalityChart3 = new Chart(
+                document.getElementById('hrpMortalityChart3'),
+                config2
+            );
         </script>
         <br>
         <br>
@@ -687,7 +780,21 @@
                 config
             );
         </script>
+        <br>
+        <br>
+        <p align="justify">Utilizing Mapbox data visualization, our hypertension dashboard offers a comprehensive view of high-risk areas for hypertension in California over the past year. By overlaying geographical information with reported cases, we provide stakeholders with a dynamic tool to identify and address regions most affected by hypertension. This interactive dashboard not only highlights areas of concern but also empowers decision-makers to allocate resources efficiently, implement targeted interventions, and ultimately improve public health outcomes in California.</p>
 
+        <div id='map' style='width: 600px; height: 500px;'></div>
+        <script>
+            mapboxgl.accessToken = 'pk.eyJ1Ijoic2FtYXJ0aC1oYWx5YWwiLCJhIjoiY2xzbzJweGwwMGFlbzJqcDdsZDZqYzVieSJ9.D4y1vzj-_g8b5tEYtcnmFw';
+            var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/samarth-halyal/clssc62gj001a01r5h9nbauwp',
+                zoom: 4.5,
+                center: [-118.829648, 35.724691]
+            });
+        </script>
+        
       </section>
 
 
@@ -712,7 +819,7 @@
         <img src="static/assets/heatmap.png">
 
         <form id="model-form" action="process" method="POST">
-            
+
         </form>
 
         <p>The prediction of the model was derived from an analysis of the features depicted in the chart above. The topmost features highlighted in the chart exerted the greatest influence on determining the model's prediction. As the features descend in the chart, their impact on the prediction gradually diminishes.</p>

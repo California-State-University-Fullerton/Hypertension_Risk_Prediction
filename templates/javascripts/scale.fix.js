@@ -24,17 +24,26 @@ if(performance.navigation.type == performance.navigation.TYPE_RELOAD ||
       document.getElementById('Form_content').style.display = 'block';
       document.getElementById('Results_content').style.display = 'none';
       document.getElementById('Dashboard_content').style.display = 'none';
+      document.getElementById('About_content').style.display = 'none';
   }
   else if( curr_page == "2" ) {
       document.getElementById('Form_content').style.display = 'none';
       document.getElementById('Results_content').style.display = 'block';
       document.getElementById('Dashboard_content').style.display = 'none';
+      document.getElementById('About_content').style.display = 'none';
   }
   else if( curr_page == "3" ){
       document.getElementById('Dashboard_content').style.display = 'block';
       document.getElementById('Form_content').style.display = 'none';
       document.getElementById('Results_content').style.display = 'none';
-  }
+      document.getElementById('About_content').style.display = 'none';
+  } 
+  else if( curr_page == "4" ){
+    document.getElementById('About_content').style.display = 'block';
+    document.getElementById('Dashboard_content').style.display = 'none';
+    document.getElementById('Form_content').style.display = 'none';
+    document.getElementById('Results_content').style.display = 'none';
+}
 }
 
 /* Added by Samarth Halyal */
@@ -43,6 +52,7 @@ document.getElementById('Form_link')
             document.getElementById('Form_content').style.display = 'block';
             document.getElementById('Results_content').style.display = 'none';
             document.getElementById('Dashboard_content').style.display = 'none';
+            document.getElementById('About_content').style.display = 'none';
             localStorage.setItem("reload_state_var", 1);
         });
 
@@ -51,6 +61,7 @@ document.getElementById('Results_link')
             document.getElementById('Form_content').style.display = 'none';
             document.getElementById('Results_content').style.display = 'block';
             document.getElementById('Dashboard_content').style.display = 'none';
+            document.getElementById('About_content').style.display = 'none';
             localStorage.setItem("reload_state_var", 2);
         });
 
@@ -59,8 +70,25 @@ document.getElementById('Dashboard_link')
             document.getElementById('Dashboard_content').style.display = 'block';
             document.getElementById('Form_content').style.display = 'none';
             document.getElementById('Results_content').style.display = 'none';
+            document.getElementById('About_content').style.display = 'none';
             localStorage.setItem("reload_state_var", 3);
 });
+
+document.getElementById('about')
+        .addEventListener('click', function (event) {
+            document.getElementById('About_content').style.display = 'block';
+            document.getElementById('Dashboard_content').style.display = 'none';
+            document.getElementById('Form_content').style.display = 'none';
+            document.getElementById('Results_content').style.display = 'none';
+            localStorage.setItem("reload_state_var", 4);
+});
+
+document.getElementById('models')
+        .addEventListener("change", function(event) {
+          document.getElementById('hypertension_selected_model').value = document.getElementById('models').value;
+          document.getElementById('stroke_selected_model').value = document.getElementById('models').value;
+          document.getElementById('diabetes_selected_model').value = document.getElementById('models').value;
+        });
 
 function clickResults() {
   document.getElementById('Results_link').click();
@@ -111,4 +139,6 @@ function toggleDiabetes() {
     x.style.display = "none";
   }
 }
+
+
 
